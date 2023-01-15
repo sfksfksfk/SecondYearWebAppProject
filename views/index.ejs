@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>PurpleSnake</title>
     <style>
       canvas {
     padding: 0;
@@ -11,7 +12,31 @@
     bottom: 0;
     left: 0;
     right: 0;
-}
+    border: 1px solid rgb(222, 222, 222)
+    }
+    body 
+    {
+        background-color: rgb(30, 30, 33);
+
+    }
+
+    h1 {
+       text-align: center;
+       font-family: "Lucida Console", "Courier New", monospace;
+       color:rgb(222, 222, 222)
+    }
+
+    a{
+        text-align: center;
+       font-family: "Lucida Console", "Courier New", monospace;
+       color:rgb(222, 222, 222);
+       position: fixed;
+  left: 50%;
+  bottom: 10%;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
+
+    }
     </style>
 
 
@@ -46,10 +71,10 @@ function game() {
     if(py>tc-1) {
         py= 0;
     }
-    ctx.fillStyle="grey";
+    ctx.fillStyle="rgb(30, 30, 33)";
     ctx.fillRect(0,0,canv.width,canv.height);
  
-    ctx.fillStyle="lime";
+    ctx.fillStyle="rgb(222,222,222)";
     for(var i=0;i<trail.length;i++) {
         ctx.fillRect(trail[i].x*gs,trail[i].y*gs,gs-2,gs-2);
         if(trail[i].x==px && trail[i].y==py) {
@@ -66,7 +91,7 @@ function game() {
         ax=Math.floor(Math.random()*tc);
         ay=Math.floor(Math.random()*tc);
     }
-    ctx.fillStyle="red";
+    ctx.fillStyle="rgb(110,0,220)";
     ctx.fillRect(ax*gs,ay*gs,gs-2,gs-2);
 }
 function keyPush(evt) {
@@ -87,6 +112,11 @@ function keyPush(evt) {
 }
 </script>
 <body>
+    </br>
+</br>
+<h1> Press any "arrow key" to start</h1>
+
+<a href="/account">My account</a>
 
 
 

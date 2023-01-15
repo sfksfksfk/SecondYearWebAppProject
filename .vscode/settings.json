@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 22,
+            "driver": "MySQL",
+            "name": "conectarea",
+            "database": "myapp",
+            "username": "admin",
+            "password": "2001"
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "secondyearwebappproject",
+  "version": "1.0.0",
+  "description": "app for second year",
+  "main": "index.js",
+  "scripts": {
+    "devstart": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.20"
+  }
+}
