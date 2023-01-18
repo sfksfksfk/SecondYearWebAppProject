@@ -100,9 +100,51 @@ body {
         
         <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username">
         <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
-        <input type="submit" value="Sign up" id="login-form-submit">
+        <input id="button" type="submit" name="button" onclick="registerUser();" value="enter"/>
+
       </form>
     
+<script>
+
+
+function registerUser(){
+
+const data = {email: document.getElementById("email-field").value ,
+              username: document.getElementById("username-field").value , 
+              password: document.getElementById("password-field").value };
+
+
+
+fetch('register', {
+method: "POST",
+body: JSON.stringify(data),
+headers: {"Content-type": "application/json; charset=UTF-8"}
+})
+
+
+.then( function(response) { 
+  if (!response.ok) {
+        throw new Error("Not 2xx response", {cause: response});
+    } else {
+         
+  window.location.href = "http://localhost:3000/game";
+
+    }
+  
+  
+})
+
+.catch(error => {() => {document.getElementById("err").innerHTML = "internal error"}}) 
+
+
+
+};   
+
+
+
+
+</script>
+
     </main>
   </body>
 

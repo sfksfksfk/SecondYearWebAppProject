@@ -1,9 +1,79 @@
 const express = require('express')
-const mysql = require('mysql')
+const sqlite = require("sqlite3");
+var bp = require('body-parser');
+
+
 
 const app = express()
+app.use(bp.json())
 
-app.use(express.urlencoded({extended:false}))
+// conexiune baza date sqlite
+let db = new sqlite.Database('./db/dbjoc.db', sqlite.OPEN_READWRITE, (err) => {
+	if (err) {
+	  console.error(err.message);
+	}
+	console.log('Connected to the database.');
+  });
+
+
+app.post("/login", (req, res) => {
+	console.log(req.body)
+
+	if(!req.body.username || !req.body.password)
+	{
+		res.status(400).send("username and password required");
+		return;
+	}
+	
+	const username = req.body.username;
+	const password = req.body.password;
+
+	const query = `SELECT * FROM users WHERE username='${username}' AND parola='${password}'`;
+	db.all(query,(err, rows) => {
+		if(err){
+			res.status(500).send("Internal error"+ err.message.toString());
+			return;
+		}else{
+			if(rows.length > 0 ){
+				res.send("Utilizator gasit!" + rows.toString());
+
+				
+			}else{
+				res.status(404).send("utilizator nu exista")
+				console.log(rows)
+			}
+		
+		
+		return;
+		}
+	})
+});
+
+app.post("/register", (req, res) => {
+
+	if(!req.body.username || !req.body.password || !req.body.email)
+	{
+		res.status(400).send("username and password and email required");
+		return;
+	}
+	const username = req.body.username;
+	const password = req.body.password;
+	const email = req.body.email
+
+	const query = `INSERT INTO users (username,parola,email) VALUES ('${username}','${password}','${email}')`;
+	db.all(query,(err, rows) => {
+		if(err){
+			res.status(500).send("Internal error"+ err.message.toString());
+			return;
+		}else{
+			res.status(201).send("Utilizator creat!");
+		
+		return;
+		}
+	})
+});
+
+
 
 //legaturi
 app.get('/', (req,res) => {
@@ -27,50 +97,6 @@ app.get('/register', (req,res)=>{
 app.get('/account', (req,res)=>{
     res.render('account.ejs')
 })
-
-const connection = mysql.createConnection({
-
-    host:'localhost',
-    user : 'root',
-    password:'',
-    database:'bazaptlogin'
-
-
-});
-
-app.post('/login', function(request, response) {
-	let username = request.body.username;
-	let password = request.body.password;
-	if (username && password) {
-
-		connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
-			if (error) throw error;
-			if (results.length > 0) {
-				request.session.loggedin = true;
-				request.session.username = username;
-				response.redirect('/home');
-			} else {
-				response.send('Incorrect Username and/or Password!');
-			}			
-			response.end();
-		});
-	} else {
-		response.send('Please enter Username and Password!');
-		response.end();
-	}
-});
-/*
-app.get('/game', function(request, response) {
-	if (request.session.loggedin) {
-		response.send('Welcome back, ' + request.session.username + '!');
-	} else {
-		response.send('Please login to view this page!');
-	}
-	response.end();
-});
-*/
-//nu a reusit sa mearga
-
 
 
 

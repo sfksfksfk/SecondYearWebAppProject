@@ -44,7 +44,7 @@ body {
   color: #8a0000;
   border: 1px solid #8a0000;
   background-color: #e58f8f;
-  opacity: 0;
+   opacity: 0; 
 }
 
 #error-msg-second-line {
@@ -81,8 +81,12 @@ body {
   background-color: #3a3a3a;
   cursor: pointer;
   outline: none;
+
 }
 
+.eroare{
+  color: red;
+}
 </style>
 
 
@@ -92,17 +96,56 @@ body {
       <h1 id="login-header">Login</h1>
       
       <div id="login-error-msg-holder">
-        <p id="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span></p>
+        <p id="login-error-msg">Invalid username and/or password</p>
       </div>
       
-      <form id="login-form">
+      
         <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username">
         <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
-        <input type="submit" value="Login" id="login-form-submit">
-      </form>
+        <input id="button" type="submit" name="button" onclick="loginUser();" value="enter"/>
+
       <p>Don't have an account yet? <a href="/register">Register</a></p>
     
     </main>
   </body>
 
+<script>
+function loginUser(){
+
+  const data = {username: document.getElementById("username-field").value , 
+  password: document.getElementById("password-field").value };
+
+
+
+  fetch('login', {
+  method: "POST",
+  body: JSON.stringify(data),
+  headers: {"Content-type": "application/json; charset=UTF-8"}
+})
+
+
+.then( function(response) { 
+  if (!response.ok) {
+    
+        document.getElementById("login-error-msg").style.opacity= "1";
+        throw new Error("Not 2xx response", {cause: response});
+    } else {
+         
+  window.location.href = "http://localhost:3000/game";
+
+    }
+  
+  
+})
+
+.catch(error => {() => {document.getElementById("err").innerHTML = "Nume sau parola gresita"}}) 
+
+
+
+};   
+
+
+
+
+</script>
 </html>
